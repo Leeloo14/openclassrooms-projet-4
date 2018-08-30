@@ -50,24 +50,25 @@
             }
         },
         methods: {
-            getTarif(visitor) {
-                if (visitor.isHalf) {
-                    return this.tarifs.find(t => t.name === 'réduit');
-                }
-                const age = dayjs().diff(visitor.birthdate, 'year')
-                if (age >= 0 && age < 4) {
-                    return this.tarifs.find(t => t.name === 'gratuit');
-                }
-                if (age >= 5 && age < 12) {
-                    return this.tarifs.find(t => t.name === 'enfant');
-                }
-                if (age >= 12 && age < 60) {
-                    return this.tarifs.find(t => t.name === 'normal');
-                }
-                if (age >= 60) {
-                    return this.tarifs.find(t => t.name === 'senior');
-                }
-            },
+           getTarif(visitor) {
+               if (visitor.isHalf) {
+                   return this.tarifs.find(t => t.name === 'réduit');
+               }
+               const [d, m, y] = visitor.birthdate.split('/');
+               const age = dayjs().diff(`${y}-${m}-${d}`, 'year')
+               if (age >= 0 && age < 4) {
+                   return this.tarifs.find(t => t.name === 'gratuit');
+               }
+               if (age >= 5 && age < 12) {
+                   return this.tarifs.find(t => t.name === 'enfant');
+               }
+               if (age >= 12 && age < 60) {
+                   return this.tarifs.find(t => t.name === 'normal');
+               }
+               if (age >= 60) {
+                   return this.tarifs.find(t => t.name === 'senior');
+               }
+           },
             createVisitor() {
                 const v = {fullName: '', country: 'fr', birthdate: dayjs().format('YYYY-MM-DD'), isHalf: false}
                 return {...v, tarif: this.getTarif(v)}
