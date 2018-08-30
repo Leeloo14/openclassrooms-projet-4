@@ -91,10 +91,13 @@
             onDataChange(e) {
                 this.checkAvailability()
             },
-            onVisitDateChange(e){
-                this.reservation = {...this.reservation, visitDate: dayjs(e).format('DD/MM/YYYY')}
-                this.checkAvailability()
-            },
+          onVisitDateChange(e) {
+            this.reservation = {...this.reservation, visitDate: dayjs(e).format('DD/MM/YYYY'), isHalf: false}
+            if (dayjs().format('YYYYMMDD') === dayjs(e).format('YYYYMMDD') && dayjs(e).hour() > 14) {
+              this.reservation = {...this.reservation, isHalf: true}
+            }
+            this.checkAvailability()
+          },
             navigateAction(nextStep) {
                 this.currentStep = nextStep
             },

@@ -57,18 +57,15 @@
         },
         data() {
           return {
-              disabledDates: {
-                  customPredictor(date){
-                      const excludedDatesConditions = dayjs(date).day() === 2 || dayjs(date).day() === 0 ||
-                          dayjs(date).format('DDMM') === '0105' ||
-                          dayjs(date).format('DDMM') === '1111' ||
-                          dayjs(date).format('DDMM') === '2512';
-                      if(dayjs().hour() > 14){
-                          return dayjs(date).isBefore(new Date()) || excludedDatesConditions
-                      }
-                      return dayjs(date).isBefore(new Date()) || excludedDatesConditions
-                  }
-              }
+           disabledDates: {
+             customPredictor(date) {
+               const excludedDatesConditions = dayjs(date).day() === 2 || dayjs(date).day() === 0 ||
+                 dayjs(date).format('DDMM') === '0105' ||
+                 dayjs(date).format('DDMM') === '1111' ||
+                 dayjs(date).format('DDMM') === '2512';
+               return dayjs(date).isBefore(dayjs().subtract(1, 'day')) || excludedDatesConditions
+             }
+           }
           }
         },
         computed: {
